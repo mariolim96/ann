@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import store from './redux/store';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Homepage } from './layouts';
+import { theme } from './theme/theme';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './theme/global';
+// import FontStyle from './base/fonts/fonts';
+const allRoutes = {
+    path: '/',
+    cart: '/cart',
+    greetings: '/greetings',
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            {/* <FontStyle /> */}
+            <GlobalStyles />
+            <Provider store={store}>
+                <Router>
+                    <Routes>
+                        <Route path={allRoutes.path} element={<Homepage />} />
+                        {/* <Route path={allRoutes.cart} element={<StoreCart />} />
+                        <Route path={allRoutes.greetings} element={<StoreGreetings />} /> */}
+                    </Routes>
+                </Router>
+            </Provider>
+        </ThemeProvider>
+    );
 }
 
 export default App;
